@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -19,9 +18,8 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Textarea } from "../ui/textarea";
 import { SelectDemo } from "./Select";
 import { useState } from "react";
-import { CiCirclePlus } from "react-icons/ci";
 
-export function DialogDemo() {
+export function DialogDemo(title: { title: string }) {
   const [pev, setPev] = useState("");
   const handleonimage = (e: any) => {
     const file = e.target.files[0];
@@ -33,11 +31,20 @@ export function DialogDemo() {
       <form>
         <DialogTrigger asChild>
           <Button
-            className="h-[240px] w-[270px] ml-50 mt-50 outline-dashed outline-4"
+            className="h-[240px] w-[270px]  mt-[24px]  outline-dashed outline-3 outline-[#EF4444]"
             variant="outline"
           >
-            <CiCirclePlus />
-            <div> Add a new Dish to Appetizers</div>
+            <div className="flex flex-col items-center">
+              {" "}
+              <img
+                src="/icon.png
+                
+            "
+                height={36}
+                width={36}
+              />
+              <div className="mt-[24px] "> Add a new Dish to {title.title}</div>
+            </div>
           </Button>
         </DialogTrigger>
 
@@ -62,7 +69,6 @@ export function DialogDemo() {
                 <div className="flex items-center">
                   {" "}
                   <SelectDemo></SelectDemo>
-                  {/* <DropdownMenuCheckboxes></DropdownMenuCheckboxes> */}
                 </div>
               </div>
             </div>

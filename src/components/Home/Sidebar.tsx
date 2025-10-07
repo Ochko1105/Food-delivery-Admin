@@ -1,27 +1,46 @@
 import React from "react";
 import { Button } from "../ui/button";
-
-const Sidebar = () => {
+import Link from "next/link";
+import { MdOutlineDashboard } from "react-icons/md";
+import { FaTruck } from "react-icons/fa";
+const Sidebar = ({
+  className,
+  className2,
+}: {
+  className2?: string;
+  className?: string;
+}) => {
   return (
-    <div className="h-screen w-[205px]">
-      <div className="flex gap-2 mt-[36px] mx-5">
-        <div>
-          <img src="/Logo.png" className="h-10 w-10"></img>
+    <div className="h-screen w-[205px] bg-[#FFFFFF]">
+      <Link href="/">
+        {" "}
+        <div className="flex gap-2 mt-[36px] mx-5">
+          <div>
+            <img src="/Logo.png" className="h-10 w-10"></img>
+          </div>
+          <div>
+            {" "}
+            <div className="font-bold">NomNom</div>
+            <div className="text-[12px] text-[#71717A]">Swift delivery</div>
+          </div>
         </div>
-        <div>
-          {" "}
-          <div className="font-bold">NomNom</div>
-          <div className="text-[12px] text-[#71717A]">Swift delivery</div>
-        </div>
-      </div>
+      </Link>
+
       <div className="flex flex-col gap-5 mt-10 items-center">
-        <Button className="bg-white text-black w-[165px]">
-          <img src="/dashboard.png"></img> Food menu
-        </Button>
-        <Button className="w-[165px]">
+        <Link href="/">
           {" "}
-          <img src="/Vector.png"></img>Orders
-        </Button>
+          <Button className={className2}>
+            <MdOutlineDashboard />
+            Food menu
+          </Button>
+        </Link>
+
+        <Link href="/orders">
+          {" "}
+          <Button className={className}>
+            <FaTruck /> Orders
+          </Button>
+        </Link>
       </div>
     </div>
   );

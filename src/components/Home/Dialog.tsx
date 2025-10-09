@@ -17,14 +17,60 @@ import { Label } from "@/components/ui/label";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Textarea } from "../ui/textarea";
 import { SelectDemo } from "./Select";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function DialogDemo(title: { title: string }) {
   const [pev, setPev] = useState("");
+  const [image, setImage] = useState<File | undefined>();
+  const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [ingredients, setIngredients] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const handleonimage = (e: any) => {
     const file = e.target.files[0];
     const filepev = URL.createObjectURL(file);
     setPev(filepev);
+  };
+
+  const addFoodHandler = async () => {
+    if (!name || !price || !image || !ingredients || !category) {
+      alert("All fields are required");
+      return;
+    }
+
+    const form = new FormData();
+
+    form.append("foodName", name);
+    form.append("price", String(price));
+    form.append("image", image); // File object
+    form.append("ingredients", ingredients);
+    form.append("category", category);
+
+    try {
+      const response = await fetch("http://localhost:3000/create-food", {
+        method: "POST",
+        body: form,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Food created successfully!");
+        setName("");
+        setPrice(0);
+        setImage(undefined);
+        setIngredients("");
+        setCategory("");
+      } else {
+        alert(data.error || "Failed to create food");
+      }
+    } catch (error) {
+      alert("Failed to create food");
+    }
+  };
+  const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImage(e.target.files[0]);
+    }
   };
   return (
     <Dialog>
@@ -59,7 +105,13 @@ export function DialogDemo(title: { title: string }) {
                 <Label htmlFor="name-1" className="w-[100px]">
                   Dish Name
                 </Label>
-                <Input id="name-1" name="name" />
+                <Input
+                  defaultValue={name}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  id="name-1"
+                  name="name"
+                />
               </div>
             </div>
             <div className="grid gap-5">
@@ -88,6 +140,7 @@ export function DialogDemo(title: { title: string }) {
                     id="checkout-7j9-optional-comments"
                     placeholder="Add any additional comments"
                     className="resize-none"
+                    onChange={(e) => setIngredients(e.target.value)}
                   />
                 </div>
               </Field>
@@ -98,7 +151,15 @@ export function DialogDemo(title: { title: string }) {
             <Label htmlFor="name-1" className="w-[100px]">
               Price
             </Label>
-            <Input placeholder="$$$$" id="name-1" name="name" />
+            <Input
+              type="number"
+              defaultValue="0"
+              placeholder="$$$$"
+              id="price"
+              name="price"
+              value={price}
+              onChange={(e) => setPrice(Number(e.target.value))}
+            />
           </div>
           <FieldSet>
             <FieldGroup>
@@ -120,8 +181,9 @@ export function DialogDemo(title: { title: string }) {
                       src={pev}
                     />
                     <input
-                      onChange={(e) => handleonimage(e)}
+                      onChange={handleonimage}
                       type="file"
+                      id="picture"
                       className=" opacity-0 absolute inset-0"
                     />
                     Add image
@@ -141,7 +203,9 @@ export function DialogDemo(title: { title: string }) {
                   </Button>
                 </DialogClose>
               </div>
-              <Button type="submit">Save changes</Button>
+              <Button onClick={addFoodHandler} type="submit">
+                Save changes
+              </Button>
             </div>
           </DialogFooter>
         </DialogContent>

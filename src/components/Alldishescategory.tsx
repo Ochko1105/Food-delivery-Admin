@@ -1,9 +1,21 @@
-import React from "react";
-import Dishescategory from "./Home/Dishescategory";
+"use client";
+import { useEffect, useState } from "react";
+
 import { DialogCategory } from "./Home/Dialogcategory";
 import Ordercomp from "./Home/Ordercomp";
+import { Button } from "./ui/button";
 
-const Alldishescategory = ({ Category2 }: { Category2: any }) => {
+const Alldishescategory = () => {
+  const [dishes, setDishes] = useState<{ title: string; id: string }[]>([]);
+  function Getdishes() {
+    fetch("http://localhost:3000/orders")
+      .then((res) => res.json())
+      .then((data) => setDishes(data));
+  }
+  useEffect(() => {
+    Getdishes();
+  }, []);
+
   return (
     <div>
       {" "}
@@ -15,15 +27,20 @@ const Alldishescategory = ({ Category2 }: { Category2: any }) => {
             Dishes category
           </div>
           <div className="mt-[16px] flex gap-2">
-            {Category2.map(
+            {dishes.map(
               (
-                categor: { title: string | undefined },
+                dish: { title: string | undefined },
                 index: React.Key | null | undefined
               ) => (
-                <Dishescategory
+                <Button
+                  className="bg-white text-black rounded-full border-1 border-black "
                   key={index}
-                  category={categor.title}
-                ></Dishescategory>
+                >
+                  {dish.title}
+                  <p className="bg-black text-white rounded-full  px-2">
+                    {dishes.length}
+                  </p>
+                </Button>
               )
             )}
 
@@ -31,12 +48,12 @@ const Alldishescategory = ({ Category2 }: { Category2: any }) => {
           </div>
         </div>
       </div>
-      {Category2.map(
+      {dishes.map(
         (
-          categor: { title: string | undefined },
+          dish: { title: string | undefined },
           index: React.Key | null | undefined
         ) => (
-          <Ordercomp key={index} title={categor.title}></Ordercomp>
+          <Ordercomp key={index} title={dish.title}></Ordercomp>
         )
       )}
     </div>

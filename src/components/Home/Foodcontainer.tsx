@@ -9,7 +9,6 @@ const Foodcontainer = ({ title, price }: { price: string; title: string }) => {
             height={130}
             width={240}
             src="https://thumbs.dreamstime.com/b/unhealthy-fast-food-delivery-menu-featuring-assorted-burgers-cheeseburgers-nuggets-french-fries-soda-high-calorie-low-356045884.jpg"
-            alt="Shoes"
           />
         </div>
 

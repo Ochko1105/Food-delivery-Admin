@@ -1,5 +1,6 @@
 import Adminlayout from "@/components/Home/Adminlayout";
 import { Calendarinput } from "@/components/Home/Dateinput";
+import { DialogCategory2 } from "@/components/Home/Ordercategory";
 import { DataTableDemo } from "@/components/Home/Ordertable";
 import { Button } from "@/components/ui/button";
 import React from "react";
@@ -17,7 +18,7 @@ const Orderpage = () => {
           <div className="flex gap-4">
             {" "}
             <Calendarinput></Calendarinput>
-            <Button className="rounded-full">Change delivery state</Button>
+            <DialogCategory2></DialogCategory2>
           </div>
         </div>
         <DataTableDemo></DataTableDemo>

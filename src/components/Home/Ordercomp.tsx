@@ -1,5 +1,5 @@
 import React from "react";
-import Dishescategory from "./Dishescategory";
+
 import { DialogDemo } from "./Dialog";
 import Foodcontainer from "./Foodcontainer";
 
@@ -15,7 +15,7 @@ const Ordercomp = ({ title }: { title: any }) => {
         <div className="flex gap-7 flex-wrap w-[1440px] ml-[24px] ">
           {" "}
           <DialogDemo title={title}></DialogDemo>
-          {Array.from({ length: 6 }).map((_, index) => (
+          {Array.from({ length: 1 }).map((_, index) => (
             <Foodcontainer
               key={index}
               title="Grilled chicken cobb salad"

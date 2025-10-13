@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { DialogCategory } from "./Dialogcategory";
 import Ordercomp from "./Ordercomp";
 import { Button } from "../ui/button";
+import { Badge } from "lucide-react";
 
 const Alldishescategory = () => {
   type Category = {
+    _id:string
     name: string;
   };
   const [categories, setCategories] = useState<Category[]>([]);
@@ -23,11 +25,23 @@ const Alldishescategory = () => {
   useEffect(() => {
     getCategories();
   }, []);
-  let Mockdishes = [
-    { title: "Apetizer" },
-    { title: "Pizza" },
-    { title: "Salad" },
-  ];
+ 
+ const Deletebutton = async (id:string) => {
+    await fetch("http://localhost:4000/api/categories/delete", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id:id
+      }),
+    });
+  };
+
+  console.log("categore",categories)
+  
+
   return (
     <div>
       {" "}
@@ -46,9 +60,10 @@ const Alldishescategory = () => {
                 key={index}
               >
                 {category.name}
-                <p className="bg-black text-white rounded-full  px-2">
+                {/* <p className="bg-black text-white rounded-full  px-2">
                   {categories.length}
-                </p>
+                </p> */}
+                <div className="bg-red-400 rounded-full h-10 w-10 items-center flex justify-center" onClick={()=>Deletebutton(category._id)} >X</div>
               </Button>
             ))}
 

@@ -1,14 +1,14 @@
 import React from "react";
 
-const Foodcontainer = ({ title, price }: { price: string; title: string }) => {
+const Foodcontainer = ({ title, price,image,comment }: { price: string| number; title: string ,image:string,comment:string}) => {
   return (
     <div className="w-[270px] mt-[20px] border-2 rounded-md">
       <div className="card bg-[#FFFFFF] h-[240px] shadow-sm items-center">
         <div className="mt-[8px] mb-0">
           <img
-            height={130}
-            width={240}
-            src="https://thumbs.dreamstime.com/b/unhealthy-fast-food-delivery-menu-featuring-assorted-burgers-cheeseburgers-nuggets-french-fries-soda-high-calorie-low-356045884.jpg"
+            height={100}
+            width={170}
+            src={image}
           />
         </div>
 
@@ -22,7 +22,7 @@ const Foodcontainer = ({ title, price }: { price: string; title: string }) => {
           </div>
 
           <p className="text-[12px] mt-2">
-            A card component has a figure, a body part, and inside body there
+        {comment}
           </p>
         </div>
       </div>

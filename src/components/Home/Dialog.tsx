@@ -56,13 +56,8 @@ export function DialogDemo(title: { title: string }) {
       const response = await fetch("http://localhost:4000/api/food", {
         method: "POST",
         mode: "no-cors",
-        body: JSON.stringify({
-          name: name,
-          price: price,
-          image: image,
-          ingredients: ingredients,
-          category: category,
-        }),
+        body: form
+     
       });
       console.log(response);
       alert("Food created successfully!");

@@ -15,8 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
-import { Textarea } from "../ui/textarea";
-import { SelectDemo } from "./Select";
+
 import { ChangeEvent, useState } from "react";
 
 export function DialogDemo(title: { title: string }) {
@@ -26,11 +25,18 @@ export function DialogDemo(title: { title: string }) {
   const [price, setPrice] = useState<number>(0);
   const [ingredients, setIngredients] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const handleonimage = (e: any) => {
-    const file = e.target.files[0];
-    const filepev = URL.createObjectURL(file);
-    setPev(filepev);
-  };
+  // const createCategoryHandler = async () => {
+  //   await fetch("http://localhost:4000/api/categories", {
+  //     method: "POST",
+  //     mode: "no-cors",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       name: newName,
+  //     }),
+  //   });
+  // };
 
   const addFoodHandler = async () => {
     if (!name || !price || !image || !ingredients || !category) {
@@ -40,37 +46,55 @@ export function DialogDemo(title: { title: string }) {
 
     const form = new FormData();
 
-    form.append("foodName", name);
+    form.append("name", name);
     form.append("price", String(price));
     form.append("image", image); // File object
     form.append("ingredients", ingredients);
     form.append("category", category);
 
     try {
-      const response = await fetch("http://localhost:3000/create-food", {
+      const response = await fetch("http://localhost:4000/api/food", {
         method: "POST",
-        body: form,
+        mode: "no-cors",
+        body: JSON.stringify({
+          name: name,
+          price: price,
+          image: image,
+          ingredients: ingredients,
+          category: category,
+        }),
       });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Food created successfully!");
-        setName("");
-        setPrice(0);
-        setImage(undefined);
-        setIngredients("");
-        setCategory("");
-      } else {
-        alert(data.error || "Failed to create food");
-      }
+      console.log(response);
+      alert("Food created successfully!");
+      setName("");
+      setPrice(0);
+      setImage(undefined);
+      setIngredients("");
+      setCategory("");
     } catch (error) {
+      console.log(error);
       alert("Failed to create food");
     }
+  };
+  const nameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const priceChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPrice(Number(e.target.value));
   };
   const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      const filepev = URL.createObjectURL(file);
+      setPev(filepev);
     }
+  };
+  const ingredientsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setIngredients(e.target.value);
+  };
+  const categoryChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setCategory(e.target.value);
   };
   return (
     <Dialog>
@@ -84,7 +108,7 @@ export function DialogDemo(title: { title: string }) {
               {" "}
               <img
                 src="/icon.png
-                
+
             "
                 height={36}
                 width={36}
@@ -101,16 +125,14 @@ export function DialogDemo(title: { title: string }) {
           <div className="grid gap-4">
             <div className="grid gap-3 ">
               <div className="flex gap-5 ">
-                {" "}
                 <Label htmlFor="name-1" className="w-[100px]">
                   Dish Name
                 </Label>
                 <Input
-                  defaultValue={name}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  id="name-1"
+                  id="name"
                   name="name"
+                  value={name}
+                  onChange={nameChangeHandler}
                 />
               </div>
             </div>
@@ -118,10 +140,12 @@ export function DialogDemo(title: { title: string }) {
               <div className="  flex gap-3 ">
                 {" "}
                 <Label htmlFor="username-1">Dish category</Label>
-                <div className="flex items-center">
-                  {" "}
-                  <SelectDemo></SelectDemo>
-                </div>
+                <Input
+                  id="category"
+                  name="category"
+                  value={category}
+                  onChange={categoryChangeHandler}
+                />
               </div>
             </div>
           </div>
@@ -136,38 +160,34 @@ export function DialogDemo(title: { title: string }) {
                       Comments
                     </FieldLabel>
                   </div>
-                  <Textarea
-                    id="checkout-7j9-optional-comments"
-                    placeholder="Add any additional comments"
-                    className="resize-none"
-                    onChange={(e) => setIngredients(e.target.value)}
+                  <Input
+                    id="ingredients"
+                    name="ingredients"
+                    value={ingredients}
+                    onChange={ingredientsChangeHandler}
                   />
                 </div>
               </Field>
             </FieldGroup>
           </FieldSet>
           <div className="flex gap-5 ">
-            {" "}
             <Label htmlFor="name-1" className="w-[100px]">
               Price
             </Label>
             <Input
-              type="number"
-              defaultValue="0"
-              placeholder="$$$$"
               id="price"
               name="price"
+              type="number"
               value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              onChange={priceChangeHandler}
             />
           </div>
+
           <FieldSet>
             <FieldGroup>
               <Field>
                 <div className="flex gap-4">
-                  {" "}
                   <div>
-                    {" "}
                     <FieldLabel
                       htmlFor="checkout-7j9-optional-comments"
                       className="w-fit "
@@ -176,12 +196,14 @@ export function DialogDemo(title: { title: string }) {
                     </FieldLabel>
                   </div>
                   <div className="ml-10  h-[120px] w-[326px] bg-gray-400 relative flex items-center justify-center">
-                    <img
-                      className="absolute inset-0 h-full w-full object-contain"
-                      src={pev}
-                    />
+                    {pev && (
+                      <img
+                        className="absolute inset-0 h-full w-full object-contain"
+                        src={pev}
+                      />
+                    )}
                     <input
-                      onChange={handleonimage}
+                      onChange={fileChangeHandler}
                       type="file"
                       id="picture"
                       className=" opacity-0 absolute inset-0"
@@ -194,9 +216,7 @@ export function DialogDemo(title: { title: string }) {
           </FieldSet>
           <DialogFooter className="mt-[36px]">
             <div className="flex-1 flex justify-between">
-              {" "}
               <div>
-                {" "}
                 <DialogClose asChild>
                   <Button variant="outline" className="border-red-500 ">
                     <FaTrashCan color="red" />

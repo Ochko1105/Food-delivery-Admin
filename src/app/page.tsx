@@ -1,7 +1,6 @@
-import Alldishescategory from "@/components/Alldishescategory";
+import Alldishescategory from "@/components/Home/Alldishescategory";
 import Adminlayout from "@/components/Home/Adminlayout";
 import { CreateFoodDialog } from "@/components/Home/Senseiimage";
-// import { CreateFoodDialog } from "@/components/Home/Senseiimage";
 
 const AdminHomepage = () => {
   return (
@@ -11,7 +10,6 @@ const AdminHomepage = () => {
         classname2="w-[165px] bg-black text-white"
       >
         <Alldishescategory></Alldishescategory>
-        <CreateFoodDialog></CreateFoodDialog>
       </Adminlayout>
     </div>
   );

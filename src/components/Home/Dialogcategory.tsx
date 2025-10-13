@@ -12,28 +12,39 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 export function DialogCategory() {
   const [newName, setNewName] = useState("");
 
-  async function createNewTask() {
-    if (!newName) {
-      alert("hooson baina");
-      return;
-    }
+  const [newCategory, setNewCategory] = useState<string | undefined>();
 
-    await fetch("http://localhost:3000/orders", {
+  const newCategoryNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewCategory(e.target.value);
+  };
+  const createCategoryHandler = async () => {
+    await fetch("http://localhost:4000/api/categories", {
       method: "POST",
+      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title: newName }),
+      body: JSON.stringify({
+        name: newName,
+      }),
     });
+  };
 
-    setNewName("");
-  }
-
+  const deleteCategoryHandler = async (category: string) => {
+    await fetch("http://localhost:3000/api/categories/delete", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(category),
+    });
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -62,7 +73,8 @@ export function DialogCategory() {
             placeholder="Type category name..."
             onKeyDown={(e) =>
               e.key === "Enter" &&
-              (createNewTask(), alert("Amjilttai ilgeele refresh hiinuu"))
+              (createCategoryHandler(),
+              alert("Amjilttai ilgeele refresh hiinuu"))
             }
             onChange={(e) => setNewName(e.target.value)}
           />
@@ -70,7 +82,7 @@ export function DialogCategory() {
         <DialogFooter className="mt-[36px]">
           <div className="flex-1 flex justify-end">
             <Button
-              onClick={() => (createNewTask(), alert("Daragdlaa"))}
+              onClick={() => (createCategoryHandler(), alert("Daragdlaa"))}
               type="submit"
             >
               Add category

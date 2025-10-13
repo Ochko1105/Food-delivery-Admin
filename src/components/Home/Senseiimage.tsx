@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-
 import {
   Dialog,
   DialogContent,
@@ -35,7 +34,7 @@ export const CreateFoodDialog = () => {
     form.append("category", category);
 
     try {
-      const response = await fetch("http://localhost:3000/api/foods", {
+      const response = await fetch("http://localhost:3000/api/food", {
         method: "POST",
         body: form,
       });

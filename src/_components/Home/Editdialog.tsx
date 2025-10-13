@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/_components/ui/button";
 
 import { FaTrashCan } from "react-icons/fa6";
 import {
@@ -10,33 +10,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/_components/ui/dialog";
+import { Input } from "@/_components/ui/input";
+import { Label } from "@/_components/ui/label";
 
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 
 import { ChangeEvent, useState } from "react";
+import { CiEdit } from "react-icons/ci";
 
-export function DialogDemo(title: { title: string }) {
+export function EditDialog(title: { title: string | undefined }) {
   const [pev, setPev] = useState("");
   const [image, setImage] = useState<File | undefined>();
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [ingredients, setIngredients] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  // const createCategoryHandler = async () => {
-  //   await fetch("http://localhost:4000/api/categories", {
-  //     method: "POST",
-  //     mode: "no-cors",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       name: newName,
-  //     }),
-  //   });
-  // };
 
   const addFoodHandler = async () => {
     if (!name || !price || !image || !ingredients || !category) {
@@ -56,8 +45,7 @@ export function DialogDemo(title: { title: string }) {
       const response = await fetch("http://localhost:4000/api/food", {
         method: "POST",
         mode: "no-cors",
-        body: form
-     
+        body: form,
       });
       console.log(response);
       alert("Food created successfully!");
@@ -95,22 +83,7 @@ export function DialogDemo(title: { title: string }) {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button
-            className="h-[240px] w-[270px]  mt-[24px]  outline-dashed outline-3 outline-[#EF4444]"
-            variant="outline"
-          >
-            <div className="flex flex-col items-center">
-              {" "}
-              <img
-                src="/icon.png
-
-            "
-                height={36}
-                width={36}
-              />
-              <div className="mt-[24px] "> Add a new Dish to {title.title}</div>
-            </div>
-          </Button>
+          <CiEdit className="h-10 w-10" />
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[472px]">
@@ -133,7 +106,6 @@ export function DialogDemo(title: { title: string }) {
             </div>
             <div className="grid gap-5">
               <div className="  flex gap-3 ">
-                {" "}
                 <Label htmlFor="username-1">Dish category</Label>
                 <Input
                   id="category"
@@ -173,7 +145,7 @@ export function DialogDemo(title: { title: string }) {
               id="price"
               name="price"
               type="number"
-              value={price}
+              defaultValue={5000}
               onChange={priceChangeHandler}
             />
           </div>

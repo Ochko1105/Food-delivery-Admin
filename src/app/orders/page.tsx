@@ -1,8 +1,8 @@
-import Adminlayout from "@/components/Home/Adminlayout";
-import { Calendarinput } from "@/components/Home/Dateinput";
-import { DialogCategory2 } from "@/components/Home/Ordercategory";
-// import { DataTableDemo } from "@/components/Home/Ordertable";
-import { Button } from "@/components/ui/button";
+import Adminlayout from "@/_components/Home/Adminlayout";
+import { Calendarinput } from "@/_components/Home/Dateinput";
+import { DialogCategory2 } from "@/_components/Home/Ordercategory";
+import { DataTableDemo } from "@/_components/Home/Ordertable";
+
 import React from "react";
 
 const Orderpage = () => {
@@ -21,7 +21,7 @@ const Orderpage = () => {
             <DialogCategory2></DialogCategory2>
           </div>
         </div>
-        {/* <DataTableDemo></DataTableDemo> */}
+        <DataTableDemo></DataTableDemo>
       </div>
     </Adminlayout>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/_components/ui/button";
 
 import {
   Dialog,
@@ -8,14 +8,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/_components/ui/dialog";
+import { Input } from "@/_components/ui/input";
+import { Label } from "@/_components/ui/label";
 
 import { ChangeEvent, useEffect, useState } from "react";
 
 export function DialogCategory() {
   const [newName, setNewName] = useState("");
+  type Category = {
+    _id: string;
+    name: string;
+  };
 
   const [newCategory, setNewCategory] = useState<string | undefined>();
 
@@ -35,23 +39,13 @@ export function DialogCategory() {
     });
   };
 
-  const deleteCategoryHandler = async (category: string) => {
-    await fetch("http://localhost:3000/api/categories/delete", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(category),
-    });
-  };
   return (
     <Dialog>
       <DialogTrigger asChild>
         <img
           src="/icon.png
-                
-            "
+              
+          "
           height={36}
           width={36}
           className="ml-4"

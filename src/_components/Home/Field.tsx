@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/_components/ui/button";
+import { Checkbox } from "@/_components/ui/checkbox";
 import {
   Field,
   FieldDescription,
@@ -8,16 +8,16 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+} from "@/_components/ui/field";
+import { Input } from "@/_components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/_components/ui/select";
+import { Textarea } from "@/_components/ui/textarea";
 
 export function FieldDemo() {
   return (

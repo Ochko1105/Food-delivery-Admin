@@ -37,7 +37,7 @@ export function DialogDemo({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: id,
+        _id: id,
       }),
     });
     await getCategories();

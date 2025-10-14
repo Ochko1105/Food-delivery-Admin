@@ -21,6 +21,7 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Button } from "../ui/button";
 import { FaTrashCan } from "react-icons/fa6";
 
+
 const Ordercomp = ({ title, _id }: { title: string; _id: string }) => {
   type Dish = {
     name: string;
@@ -29,6 +30,7 @@ const Ordercomp = ({ title, _id }: { title: string; _id: string }) => {
     category: string;
     image: string;
     _id: string;
+    categorid:string
   };
 
   const [dishes, setDishes] = useState<Dish[]>([]);
@@ -63,12 +65,14 @@ const Ordercomp = ({ title, _id }: { title: string; _id: string }) => {
         <div className="pt-4 pl-4 font-bold">{title}</div>
         <div className="flex gap-7 flex-wrap w-[1440px] ml-[24px] ">
           <DialogDemo getDishes={getDishes} id={_id} title={title}></DialogDemo>
+          
 
           {dishes.map((dish, index) => (
-            <div
+            <div>{dish.categorid===_id &&   <div
               key={index}
               className="w-[270px] mt-[20px] border-2 rounded-md"
             >
+             
               <div className="card bg-[#FFFFFF] h-[240px] shadow-sm items-center">
                 <div className=" mb-0 h-[130px] w-[240px] relative ">
                   <img
@@ -204,7 +208,8 @@ const Ordercomp = ({ title, _id }: { title: string; _id: string }) => {
                   <p className="text-[12px] mt-2">{dish.ingredients}</p>
                 </div>
               </div>
-            </div>
+            </div> }</div>
+          
           ))}
         </div>
       </div>

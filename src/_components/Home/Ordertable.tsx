@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import * as React from "react";
 import {
@@ -15,8 +16,8 @@ import {
 } from "@tanstack/react-table";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
-import { Button } from "@/_components/ui/button";
-import { Checkbox } from "@/_components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -25,8 +26,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/_components/ui/dropdown-menu";
-import { Input } from "@/_components/ui/input";
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -34,7 +35,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/_components/ui/table";
+} from "@/components/ui/table";
 
 const data: Payment[] = [
   {
@@ -114,7 +115,7 @@ export const columns: ColumnDef<Payment>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Customer
+          Email
           <ArrowUpDown />
         </Button>
       );
@@ -145,9 +146,9 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="rounded-full">
-              Pending
-              <ArrowUpDown />
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

@@ -21,7 +21,6 @@ const Orderpage = () => {
             <DialogCategory2></DialogCategory2>
           </div>
         </div>
-        <DataTableDemo></DataTableDemo>
       </div>
     </Adminlayout>
   );

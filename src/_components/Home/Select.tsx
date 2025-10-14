@@ -39,7 +39,9 @@ export function SelectDemo({ title }: { title: string }) {
         <SelectGroup>
           <SelectLabel>{title} </SelectLabel>
           {categories.map((categor) => (
-            <SelectItem value={title}>{categor.name}</SelectItem>
+            <SelectItem key={categor.name} value={categor._id}>
+              {categor.name}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>

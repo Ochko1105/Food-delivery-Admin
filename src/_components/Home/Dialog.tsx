@@ -2,6 +2,7 @@
 import { Button } from "@/_components/ui/button";
 
 import { FaTrashCan } from "react-icons/fa6";
+import { GrGallery } from "react-icons/gr";
 import {
   Dialog,
   DialogClose,
@@ -17,47 +18,44 @@ import { Label } from "@/_components/ui/label";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 
 import { ChangeEvent, useEffect, useState } from "react";
+import { Textarea } from "../ui/textarea";
 
 export function DialogDemo({
   getDishes,
   title,
+  id,
 }: {
   title: string | undefined;
   getDishes: Function;
+  id: string;
 }) {
   const [categories, setCategories] = useState<Category[]>([]);
   type Category = {
-    _id: any;
+    _id: string;
     name: string;
   };
-  type id4 = {
-    _id: any;
-    name: string;
-  };
-  const [pev, setPev] = useState("");
-  const [image, setImage] = useState<File | undefined>();
-  const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
-  const [ingredients, setIngredients] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [id, setId] = useState<Object>({});
+
   const getCategories = async () => {
     const result = await fetch("http://localhost:4000/api/categories");
     const responseData = await result.json();
 
     const { data } = responseData;
+
     setCategories(data);
-    const id2 = data[0]._id;
-    setId(id2);
-    console.log("ID", id2);
-    console.log("ID", id);
   };
   useEffect(() => {
     getCategories();
   }, []);
 
+  const [pev, setPev] = useState("");
+  const [image, setImage] = useState<File | undefined>();
+  const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [ingredients, setIngredients] = useState<string>("");
+  // const [category, setCategory] = useState<string>("");
+
   const addFoodHandler = async () => {
-    if (!name || !price || !image || !ingredients || !category) {
+    if (!name || !price || !image || !ingredients) {
       alert("All fields are required");
       return;
     }
@@ -68,8 +66,9 @@ export function DialogDemo({
     form.append("price", String(price));
     form.append("image", image); // File object
     form.append("ingredients", ingredients);
-    form.append("category", category);
-    form.append("id", id);
+    form.append("category", ingredients);
+    form.append("categorid", id);
+    // form.append("category", category);
 
     try {
       const response = await fetch("http://localhost:4000/api/food", {
@@ -84,7 +83,7 @@ export function DialogDemo({
       setPrice(0);
       setImage(undefined);
       setIngredients("");
-      setCategory("");
+      // setCategory("");
     } catch (error) {
       console.log(error);
       alert("Failed to create food");
@@ -107,9 +106,9 @@ export function DialogDemo({
   const ingredientsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIngredients(e.target.value);
   };
-  const categoryChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.target.value);
-  };
+  // const categoryChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setCategory(e.target.value);
+  // };
   return (
     <Dialog>
       <form>
@@ -133,94 +132,94 @@ export function DialogDemo({
 
         <DialogContent className="sm:max-w-[472px]">
           <DialogHeader>
-            <DialogTitle>Dishes info</DialogTitle>
+            <DialogTitle>Add new Dish to {title}</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3 ">
-              <div className="flex gap-5 ">
-                <Label htmlFor="name-1" className="w-[100px]">
-                  Dish Name
-                </Label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={name}
-                  onChange={nameChangeHandler}
-                />
-              </div>
-            </div>
 
-            <div className="grid gap-5">
-              <div className="  flex gap-3 ">
-                {" "}
-                <Label htmlFor="username-1">Dish category</Label>
-                <Input
-                  id="category"
-                  name="category"
-                  value={category}
-                  onChange={categoryChangeHandler}
-                />
-              </div>
+          <div className="flex gap-5  mt-8">
+            <div className="">
+              <Label htmlFor="name-1" className="w-[100px] mb-3">
+                Food name
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                value={name}
+                placeholder="Type food name"
+                onChange={nameChangeHandler}
+              />
+            </div>
+            <div>
+              <Label htmlFor="name-1" className="w-[100px] mb-3">
+                Food price
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                value={price}
+                type="number"
+                placeholder="Enter price ..."
+                onChange={priceChangeHandler}
+              />
             </div>
           </div>
+
           <FieldSet>
             <FieldGroup>
               <Field>
-                <div className="flex gap-5">
+                <div className="">
                   <div>
-                    <FieldLabel htmlFor="checkout-7j9-optional-comments">
-                      Comments
+                    <FieldLabel
+                      htmlFor="checkout-7j9-optional-comments"
+                      className="mb-3"
+                    >
+                      Ingredients
                     </FieldLabel>
                   </div>
-                  <Input
-                    id="ingredients"
-                    name="ingredients"
+                  <Textarea
+                    id="message"
+                    placeholder="List ingredients ..."
+                    required
+                    className="min-h-[100px] resize-none sm:min-w-[300px]"
                     value={ingredients}
-                    onChange={ingredientsChangeHandler}
+                    onChange={(e) => setIngredients(e.target.value)}
                   />
                 </div>
               </Field>
             </FieldGroup>
           </FieldSet>
-          <div className="flex gap-5 ">
-            <Label htmlFor="name-1" className="w-[100px]">
-              Price
-            </Label>
-            <Input
-              id="price"
-              name="price"
-              type="number"
-              value={price}
-              onChange={priceChangeHandler}
-            />
-          </div>
 
           <FieldSet>
             <FieldGroup>
               <Field>
-                <div className="flex gap-4">
+                <div className="">
                   <div>
                     <FieldLabel
                       htmlFor="checkout-7j9-optional-comments"
-                      className="w-fit "
+                      className="w-fit mb-3"
                     >
-                      Image
+                      Food image
                     </FieldLabel>
                   </div>
-                  <div className="ml-10  h-[120px] w-[326px] bg-gray-400 relative flex items-center justify-center">
+                  <div className="min-h-[140px] resize-none sm:min-w-[300px] bg-[#2563EB33] relative aspect-video outline-dashed outline-2 flex justify-center items-center">
                     {pev && (
                       <img
-                        className="absolute inset-0 h-full w-full object-contain"
+                        className="absolute inset-0 h-full w-full  "
                         src={pev}
                       />
                     )}
+
                     <input
                       onChange={fileChangeHandler}
                       type="file"
                       id="picture"
                       className=" opacity-0 absolute inset-0"
                     />
-                    Add image
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="h-[32px] w-[32px] bg-white flex items-center justify-center rounded-full">
+                        <GrGallery />
+                      </div>
+                      Choose a file or drag & drop it here
+                    </div>
                   </div>
                 </div>
               </Field>

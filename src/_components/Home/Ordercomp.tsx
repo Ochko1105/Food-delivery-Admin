@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { FiEdit2 } from "react-icons/fi";
 
 import { DialogDemo } from "./Dialog";
-import Foodcontainer from "./Foodcontainer";
+
 import {
   Dialog,
   DialogClose,
@@ -12,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { CiEdit } from "react-icons/ci";
+
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { SelectDemo } from "./Select";
@@ -20,25 +21,7 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Button } from "../ui/button";
 import { FaTrashCan } from "react-icons/fa6";
 
-const Ordercomp = ({ title }: { title: any }) => {
-  type Category = {
-    _id: string;
-    name: string;
-  };
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  const getCategories = async () => {
-    const result = await fetch("http://localhost:4000/api/categories");
-    const responseData = await result.json();
-
-    const { data } = responseData;
-
-    setCategories(data);
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
-
+const Ordercomp = ({ title, _id }: { title: string; _id: string }) => {
   type Dish = {
     name: string;
     ingredients: string;
@@ -79,19 +62,27 @@ const Ordercomp = ({ title }: { title: any }) => {
       <div className="bg-[#FFFFFF] mt-[24px] ml-[24px] max-w-[1440px] ">
         <div className="pt-4 pl-4 font-bold">{title}</div>
         <div className="flex gap-7 flex-wrap w-[1440px] ml-[24px] ">
-          <DialogDemo getDishes={getDishes} title={title}></DialogDemo>
+          <DialogDemo getDishes={getDishes} id={_id} title={title}></DialogDemo>
 
           {dishes.map((dish, index) => (
-            <div className="w-[270px] mt-[20px] border-2 rounded-md">
+            <div
+              key={index}
+              className="w-[270px] mt-[20px] border-2 rounded-md"
+            >
               <div className="card bg-[#FFFFFF] h-[240px] shadow-sm items-center">
-                <div className="mt-[8px] mb-0">
-                  <img height={100} width={170} src={dish.image} />
+                <div className=" mb-0 h-[130px] w-[240px] relative ">
+                  <img
+                    src={dish.image}
+                    className="absolute inset-0 mt-4 w-[240px] h-[130px]"
+                  />
                 </div>
 
                 <Dialog>
                   <form>
                     <DialogTrigger asChild>
-                      <CiEdit className="h-10 w-10" />
+                      <div className="h-[44px] w-[44px] bg-white flex items-center justify-center absolute top-20 left-47 rounded-full">
+                        <FiEdit2 color="red" />
+                      </div>
                     </DialogTrigger>
 
                     <DialogContent className="sm:max-w-[472px]">
@@ -113,7 +104,7 @@ const Ordercomp = ({ title }: { title: any }) => {
                           </div>
                         </div>
                         <div className="grid gap-5">
-                          <div className="  flex gap-3 ">
+                          <div className="flex gap-8 ">
                             <Label htmlFor="name-1" className="w-[100px]">
                               Dish Category
                             </Label>
@@ -125,9 +116,7 @@ const Ordercomp = ({ title }: { title: any }) => {
                         <FieldGroup>
                           <Field>
                             <div className="flex gap-5">
-                              {" "}
                               <div>
-                                {" "}
                                 <FieldLabel htmlFor="checkout-7j9-optional-comments">
                                   Comments
                                 </FieldLabel>
@@ -204,13 +193,12 @@ const Ordercomp = ({ title }: { title: any }) => {
                   </form>
                 </Dialog>
 
-                <div className="card mx-5 mt-2">
-                  <div className="flex gap-2 mt-0">
-                    {" "}
-                    <h2 className="card-title text-red-500 font-normal text-[14px]">
+                <div className="card mx-5 mt-6">
+                  <div className="flex justify-between mt-0 w-[240px]">
+                    <div className="  card-title text-[#EF4444] text-[14px] font-semibold">
                       {dish.name}
-                    </h2>
-                    <p>${dish.price}</p>
+                    </div>
+                    <div className="">${dish.price}</div>
                   </div>
 
                   <p className="text-[12px] mt-2">{dish.ingredients}</p>

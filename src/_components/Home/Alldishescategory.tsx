@@ -133,8 +133,12 @@ const Alldishescategory = () => {
           </div>
         </div>
       </div>
-      {categories.map((category: { name: string | undefined }) => (
-        <Ordercomp key={category.name} title={category.name}></Ordercomp>
+      {categories.map((category: { name: string; _id: string }) => (
+        <Ordercomp
+          key={category.name}
+          title={category.name}
+          _id={category._id}
+        ></Ordercomp>
       ))}
     </div>
   );

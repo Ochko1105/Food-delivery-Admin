@@ -27,46 +27,14 @@ export function DialogDemo({
 }: {
   title: string | undefined;
   getDishes: Function;
+
   id: string;
 }) {
-  const createCategoryHandler2 = async () => {
-    await fetch("http://localhost:4000/api/turshih", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: id,
-      }),
-    });
-    await getCategories();
-  };
-  const [categories, setCategories] = useState<Category[]>([]);
-  type Category = {
-    _id: string;
-    name: string;
-  };
-
-  const getCategories = async () => {
-    const result = await fetch("http://localhost:4000/api/categories");
-    const responseData = await result.json();
-
-    const { data } = responseData;
-
-    setCategories(data);
-  };
-  useEffect(() => {
-    getCategories();
-    createCategoryHandler2();
-  }, []);
-
   const [pev, setPev] = useState("");
   const [image, setImage] = useState<File | undefined>();
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [ingredients, setIngredients] = useState<string>("");
-  // const [category, setCategory] = useState<string>("");
 
   const addFoodHandler = async () => {
     if (!name || !price || !image || !ingredients) {
@@ -117,12 +85,7 @@ export function DialogDemo({
       setPev(filepev);
     }
   };
-  const ingredientsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setIngredients(e.target.value);
-  };
-  // const categoryChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setCategory(e.target.value);
-  // };
+
   return (
     <Dialog>
       <form>

@@ -42,6 +42,7 @@ const Alldishescategory = () => {
     const responseData = await result.json();
 
     const { data } = responseData;
+    console.log({ responseData });
 
     setCategories(data);
   };
@@ -135,6 +136,7 @@ const Alldishescategory = () => {
       </div>
       {categories.map((category: { name: string; _id: string }) => (
         <Ordercomp
+          getCategories={getCategories}
           key={category.name}
           title={category.name}
           _id={category._id}

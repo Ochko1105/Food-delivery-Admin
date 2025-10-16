@@ -23,12 +23,12 @@ import { Textarea } from "../ui/textarea";
 export function DialogDemo({
   getDishes,
   title,
-  id,
+  categorid,
 }: {
   title: string | undefined;
   getDishes: Function;
 
-  id: string;
+  categorid: string;
 }) {
   const [pev, setPev] = useState("");
   const [image, setImage] = useState<File | undefined>();
@@ -49,7 +49,7 @@ export function DialogDemo({
     form.append("image", image); // File object
     form.append("ingredients", ingredients);
     form.append("category", ingredients);
-    form.append("categorid", id);
+    form.append("categorid", categorid);
     // form.append("category", category);
 
     try {

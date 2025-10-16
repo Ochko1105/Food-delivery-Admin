@@ -1,7 +1,6 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { DialogCategory } from "./Dialogcategory";
 import Ordercomp from "./Ordercomp";
 import { Button } from "../ui/button";
 import {
@@ -61,6 +60,7 @@ const Alldishescategory = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [filtered, setFiltered] = useState<Category[]>([]);
   const [status, setStatus] = useState<boolean>(false);
+  const [red, setRed] = useState<string>("ulaan");
 
   type Category = {
     _id: string;
@@ -98,6 +98,7 @@ const Alldishescategory = () => {
   function filteredcat(categorid: string) {
     const filteredcategory = categories.filter((e) => e._id === categorid);
     setFiltered(filteredcategory);
+
     setStatus(true);
   }
 
@@ -113,7 +114,7 @@ const Alldishescategory = () => {
             <Button
               className={
                 `bg-white text-black rounded-full border-1 border-black ` +
-                `${status ? " !border-red-500" : " !border-black"}`
+                `${status ? " !border-black" : " !border-red-400"}`
               }
               onClick={() => (setFiltered(categories), setStatus(!true))}
             >
@@ -127,7 +128,7 @@ const Alldishescategory = () => {
                 onClick={() => (filteredcat(category._id), setStatus(!false))}
                 className={
                   `bg-white text-black rounded-full border-1 border-black ` +
-                  `${status ? " !border-red-500" : " !border-black"}`
+                  `${red === "ulaan" ? " !border-red-500" : " !border-black"}`
                 }
                 key={index}
               >
@@ -188,6 +189,7 @@ const Alldishescategory = () => {
             </Dialog>
           </div>
         </div>
+
         {status ? (
           <div>
             {filtered.map((category) => (

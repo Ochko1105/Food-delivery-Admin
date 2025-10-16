@@ -12,7 +12,6 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { SelectDemo } from "./Select";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Button } from "../ui/button";
 import { FaTrashCan } from "react-icons/fa6";
@@ -217,10 +216,10 @@ const Dishinfo = ({
                         </FieldLabel>
                       </div>
                       <div className="ml-10  h-[120px] w-[326px] bg-gray-400 relative flex items-center justify-center">
-                        {pev && (
+                        {image && (
                           <img
                             className="absolute inset-0 h-full w-full object-contain"
-                            src={pev}
+                            src={image}
                           />
                         )}
                         <input

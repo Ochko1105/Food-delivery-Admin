@@ -62,7 +62,11 @@ const Ordercomp = ({
           {title} ({dishes2.length})
         </div>
         <div className="flex gap-7 flex-wrap w-[1440px] ml-[24px] ">
-          <DialogDemo getDishes={getDishes} id={_id} title={title}></DialogDemo>
+          <DialogDemo
+            getDishes={getDishes}
+            categorid={_id}
+            title={title}
+          ></DialogDemo>
 
           {dishes2.map((dish, index) => (
             <Dishinfo

@@ -140,7 +140,7 @@ const Alldishescategory = () => {
           key={category.name}
           title={category.name}
           _id={category._id}
-        ></Ordercomp>
+        />
       ))}
     </div>
   );

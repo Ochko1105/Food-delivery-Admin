@@ -62,6 +62,9 @@ const Dishinfo = ({
   if (image2 !== image) {
     newform.append("image", image2);
   }
+  if (image2 === image) {
+    newform.append("image", image);
+  }
   newform.append("ingredients", ingredients2);
   newform.append("foodid", id);
   newform.append("categorid", categorid);
@@ -214,10 +217,12 @@ const Dishinfo = ({
                         </FieldLabel>
                       </div>
                       <div className="ml-10  h-[120px] w-[326px] bg-gray-400 relative flex items-center justify-center">
-                        <img
-                          className="absolute inset-0 h-full w-full object-contain"
-                          src={image}
-                        />
+                        {pev && (
+                          <img
+                            className="absolute inset-0 h-full w-full object-contain"
+                            src={pev}
+                          />
+                        )}
                         <input
                           onChange={fileChangeHandler}
                           type="file"

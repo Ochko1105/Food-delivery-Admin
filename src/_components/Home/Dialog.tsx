@@ -21,12 +21,12 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
 
 export function DialogDemo({
-  getDishes,
+  refetchFoods,
   title,
   categorid,
 }: {
   title: string | undefined;
-  getDishes: Function;
+  refetchFoods: () => Promise<void>;
 
   categorid: string;
 }) {
@@ -58,14 +58,12 @@ export function DialogDemo({
         mode: "no-cors",
         body: form,
       });
-      await getDishes();
-      console.log(response);
+      await refetchFoods();
       alert("Food created successfully!");
       setName("");
       setPrice(0);
       setImage(undefined);
       setIngredients("");
-      // setCategory("");
     } catch (error) {
       console.log(error);
       alert("Failed to create food");

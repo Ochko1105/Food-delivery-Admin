@@ -118,7 +118,7 @@ const Alldishescategory = () => {
               }
               onClick={() => (setFiltered(categories), setStatus(!true))}
             >
-              All dishes
+              All categories
               <p className="bg-black text-white rounded-full  px-2">
                 {dishes.length}
               </p>

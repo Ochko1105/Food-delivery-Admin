@@ -63,13 +63,14 @@ const Ordercomp = ({
         </div>
         <div className="flex gap-7 flex-wrap w-[1440px] ml-[24px] ">
           <DialogDemo
-            getDishes={getDishes}
+            refetchFoods={() => getDishes()}
             categorid={_id}
             title={title}
           ></DialogDemo>
 
           {dishes2.map((dish, index) => (
             <Dishinfo
+              refetchFoods={() => getDishes()}
               getDishes={getDishes}
               key={index}
               Deletefoodinfo={Deletefoodinfo}

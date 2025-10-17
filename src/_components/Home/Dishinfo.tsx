@@ -26,6 +26,7 @@ import {
 } from "../ui/select";
 
 const Dishinfo = ({
+  refetchFoods,
   categorname,
   id,
   getDishes,
@@ -37,6 +38,7 @@ const Dishinfo = ({
   title,
   _id,
 }: {
+  refetchFoods: () => Promise<void>;
   categorname: string;
   name: string;
   image: string;
